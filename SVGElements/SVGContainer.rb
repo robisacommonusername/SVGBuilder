@@ -1,4 +1,9 @@
-require_relative '*'
+content_classes = [:rect, :line, :polyline, :polygon, :circle,
+		:path, :ellipse, :image, :text, :tspan, :tref, :textPath,
+		:anchor, :group, :style, :use]
+content_classes.each do |c|
+	require_relative c.to_s.capitalize
+end
 
 class SVGContainer < SVGObject	
 	def initialize
@@ -7,10 +12,8 @@ class SVGContainer < SVGObject
 	end
 	
 	#A container may have shapes added to it. Metaprogram them in
-	content = [:rect, :line, :polyline, :polygon, :circle,
-		:path, :ellipse, :image, :text, :tspan, :tref, :textPath,
-		:anchor, :group]
-	content.each do |shape_name|
+	#Don't metaprogram "use", we will give that a custom implemenation
+	content_classes.reject{|c| c == :use}.each do |shape_name|
 		define_method(shape_name) do |args|
 			#determine shape class from name, and create an instance
 			shape_class_name = shape_name.to_s.capitalize
@@ -56,7 +59,7 @@ class SVGContainer < SVGObject
 			#Copy object into container
 			#We need to make a copy of the group here to prevent the original
 			#being mutated
-			copy = svg_object.clone
+			copy = svg_object.deep_copy
 			xy = [x,y].map{|z| z ? z : 0}
 			copy.translate(*xy) unless x.nil? and y.nil?
 			@svg_objects << copy
