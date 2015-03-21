@@ -12,4 +12,14 @@ class Rect < AbstractShape
 			:ry => ry
 		})
 	end
+	
+	# #to allows a rectangle to be drawn from its top left and bottom right
+	# coordinates, rather than the top left and the height/width. For
+	# example Rect.new(1,1).to(2,2) draws the same square as Rect.new(1,1,1,1)
+	def to(right, bottom)
+		@attributes[:width] = right - @attributes[:x]
+		@attributes[:height] = bottom - @attributes[:y]
+		if block_given? yield self end
+		return self
+	end
 end
