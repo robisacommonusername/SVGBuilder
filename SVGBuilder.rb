@@ -26,8 +26,6 @@ class SVGBuilder < SVGContainer
 		return self
 	end
 	
-	private :new_id
-	
 	def new_id
 		"id_#{@id_ctr++}"
 	end
