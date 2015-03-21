@@ -5,6 +5,10 @@ class SVGObject
 		@name = 'abstract'
 	end
 	
+	def deep_copy
+		Marshal.load( Marshal.dump self )
+	end
+	
 	private :attributes_string
 	
 	#helper methods which will be used in to_xml
