@@ -14,6 +14,9 @@ class AbstractShape < SVGObject
 		
 		@name = 'abstractshape'
 		@attributes[:clip_path] = nil
+		
+		if block_given? yield self end
+		return self
 	end
 	
 	#The following attributes might be ids, which need to be wrapped as
