@@ -1,4 +1,4 @@
-require_relative '../AttrHelpers/Style'
+require_relative '../AttrHelpers/StyleAttrHelper'
 module StylableMixin
 	def stylable_init
 		@attributes[:style] = nil
