@@ -1,8 +1,10 @@
 require_relative 'AbstractGradient'
 
-class LinearGradient < AbstractGradient
-	def initialize
-		super
-		@name = 'linearGradient'
+module SVG
+	class LinearGradient < AbstractGradient
+		def initialize
+			super
+			@name = 'linearGradient'
+		end
 	end
 end

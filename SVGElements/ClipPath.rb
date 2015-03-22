@@ -1,18 +1,20 @@
 require_relative '../Mixins/StylableMixin'
 require_relative '../Mixins/TransformableMixin'
 
-class ClipPath < SVGContainer
-	include StylableMixin
-	include TransformableMixin
-	
-	def initialize
-		super
-		stylable_init
-		transformable_init
+module SVG
+	class ClipPath < SVGContainer
+		include StylableMixin
+		include TransformableMixin
 		
-		@name = "clipPath"
-		
-		if block_given? yield self end
-		return self
+		def initialize
+			super
+			stylable_init
+			transformable_init
+			
+			@name = "clipPath"
+			
+			if block_given? yield self end
+			return self
+		end
 	end
 end

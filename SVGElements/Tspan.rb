@@ -1,23 +1,25 @@
 require_relative 'SVGObject'
 require_relative '../Mixins/StylableMixin'
-class Tspan < SVGObject
-	include StylableMixin
-	
-	def initialize(contents, do_escape=true)
-		super
-		stylable_init
+module SVG
+	class Tspan < SVGObject
+		include StylableMixin
 		
-		@name = 'tspan'
-		@contents = contents
-		@escape = do_escape
+		def initialize(contents, do_escape=true)
+			super
+			stylable_init
+			
+			@name = 'tspan'
+			@contents = contents
+			@escape = do_escape
+			
+			if block_given? yield self end
+			return self
+		end
 		
-		if block_given? yield self end
-		return self
+		def to_xml
+			content_str = @escape ? escape_xml @contents : @content
+			"<tspan #{attributes_string}>#{content_str}</tspan>"
+		end
+		
 	end
-	
-	def to_xml
-		content_str = @escape ? escape_xml @contents : @content
-		"<tspan #{attributes_string}>#{content_str}</tspan>"
-	end
-	
 end
