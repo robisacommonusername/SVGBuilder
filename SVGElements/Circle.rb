@@ -8,6 +8,9 @@ class Circle < AbstractShape
 			:cx => x,
 			:cy => y
 		})
+		
+		if block_given? yield self end
+		return self
 	end
 	
 	#To allows us to draw a circle without specifying the radius. Instead

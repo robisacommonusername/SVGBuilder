@@ -11,5 +11,8 @@ class ClipPath < SVGContainer
 		transformable_init
 		
 		@name = "clipPath"
+		
+		if block_given? yield self end
+		return self
 	end
 end

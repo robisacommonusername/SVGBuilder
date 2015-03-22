@@ -9,5 +9,8 @@ class Text < SVGTextContainer
 			:x => x,
 			:y => y
 		})
+		
+		if block_given? yield self end
+		return self
 	end
 end

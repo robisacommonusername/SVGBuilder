@@ -9,6 +9,9 @@ class Line < AbstractShape
 			:x2 => x2,
 			:y2 => y2
 		})
+		
+		if block_given? yield self end
+		return self
 	end
 	
 	#some convenience methods

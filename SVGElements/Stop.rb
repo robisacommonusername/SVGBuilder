@@ -9,5 +9,8 @@ class Stop < SVGObject
 			:stop_color => stop_colour,
 			:offset => offset
 		})
+		
+		if block_given? yield self end
+		return self
 	end
 end

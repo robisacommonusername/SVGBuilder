@@ -13,5 +13,8 @@ class Image < SVGObject
 		
 		@name = 'image'
 		@attributes[:"xlink:href"] = url
+		
+		if block_given? yield self end
+		return self
 	end
 end

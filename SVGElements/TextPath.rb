@@ -6,5 +6,8 @@ class TextPath < SVGTextContainer
 		
 		@name = 'textPath'
 		@attributes[:"xlink:href"] = path_id
+		
+		if block_given? yield self end
+		return self
 	end
 end

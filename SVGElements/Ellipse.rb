@@ -9,5 +9,8 @@ class Ellipse < AbstractShape
 			:cx => x,
 			:cy => y
 		})
+		
+		if block_given? yield self end
+		return self
 	end
 end

@@ -4,6 +4,9 @@ class Path < AbstractShape
 		super
 		@name = 'path'
 		@attributes[:d] = d
+		
+		if block_given? yield self end
+		return self
 	end
 	
 	#Add some convenience methods for drawing the path section by section

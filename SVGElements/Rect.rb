@@ -11,6 +11,9 @@ class Rect < AbstractShape
 			:rx => rx,
 			:ry => ry
 		})
+		
+		if block_given? yield self end
+		return self
 	end
 	
 	# #to allows a rectangle to be drawn from its top left and bottom right

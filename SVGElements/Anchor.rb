@@ -5,6 +5,9 @@ class Anchor < SVGContainer
 		super
 		
 		@name = 'a'
+		
+		if block_given? yield self end
+		return self
 	end
 	
 	def to_xml

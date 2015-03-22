@@ -4,6 +4,9 @@ class Polyline < AbstractShape
 		super
 		@name = 'polyline'
 		@attributes[:points] = points.each_slice(2).map{|xy| "#{xy.first} #{xy.last}"}.join(', ')
+		
+		if block_given? yield self end
+		return self
 	end
 	
 	def to(x,y)

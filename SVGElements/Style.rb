@@ -8,6 +8,9 @@ class Style < SVGContainer
 		@name = 'style'
 		@css = 'css'
 		@stylesheet = CssStylesheet.new
+		
+		if block_given? yield self end
+		return self
 	end
 	
 	def add_class(name)

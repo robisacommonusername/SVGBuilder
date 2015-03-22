@@ -10,6 +10,9 @@ class Tspan < SVGObject
 		@name = 'tspan'
 		@contents = contents
 		@escape = do_escape
+		
+		if block_given? yield self end
+		return self
 	end
 	
 	def to_xml

@@ -12,5 +12,8 @@ class Use < AbstractShape
 			:y => y,
 			:"xlink:href" => id
 		})
+		
+		if block_given? yield self end
+		return self
 	end
 end
