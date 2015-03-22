@@ -1,16 +1,14 @@
 #Inline css style
-class Style
+class StyleAttrHelper
 	def initialize
 		@styles = {}
 	end
 	
 	def to_s
 		#Note that underscores in key are converted to hyphens.
-		#Quotes are entity encoded
 		kvpairs = @styles.map do |k,v|
-			kk = k.to_s.gsub('_', '-').gsub('"', '&quot;')
-			vv = v.to_s.gsub('"', '&quot;')
-			"#{kk}: #{vv}"
+			kk = k.to_s.gsub('_', '-')
+			"#{kk}: #{v}"
 		end
 		return kvpairs.join('; ')
 	end

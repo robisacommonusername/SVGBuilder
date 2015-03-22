@@ -1,20 +1,20 @@
 require_relative 'SVGObject'
 require_relative '../Mixins/StylableMixin'
-require_relative '../Mixins/EscapingMixin'
 class Tspan < SVGObject
 	include StylableMixin
-	include EscapingMixin
 	
-	def initialize(contents)
+	def initialize(contents, do_escape=true)
 		super
 		stylable_init
 		
 		@name = 'tspan'
 		@contents = contents
+		@escape = do_escape
 	end
 	
 	def to_xml
-		"<tspan #{attributes_string}>#{escape_XML @contents}</tspan>"
+		content_str = @escape ? escape_xml @contents : @content
+		"<tspan #{attributes_string}>#{content_str}</tspan>"
 	end
 	
 end

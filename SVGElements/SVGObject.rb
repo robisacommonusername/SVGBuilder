@@ -9,13 +9,36 @@ class SVGObject
 		Marshal.load( Marshal.dump self )
 	end
 	
-	private :attributes_string
+	#Some methods for performing escaping of text, etc
+	attr_accessor :escape
+	alias :"escape?", :escape
 	
+	private :escape_xml
+	def escape_xml(s)
+		#Escape the basic entities < > & and "
+		#Make sure we escape ampersand first to avoid double escapes
+		if (@escape)
+			s.gsub('&','&amp;').gsub('<','&lt;').gsub('>','&gt;').gsub('"','&quot;')
+		else
+			s
+		end
+	end
+	
+	private :escape_quote
+	def escape_quote(s)
+		if (@escape)
+			s.gsub('"','&quot;')
+		else
+			s
+		end
+	end
+	
+	private :attributes_string
 	#helper methods which will be used in to_xml
 	def attributes_string
 		#note that underscores are converted to hyphens. Quotes are entity encoded
 		attrs = @attributes.reject{|k,v| v.nil?}.map do |k,v|
-			vv = v.to_s.gsub('"', '&quot;')
+			vv = escape_quote v.to_s
 			kk = k.to_s.gsub('_', '-')
 			%Q[#{kk}="#{vv}"]
 		end

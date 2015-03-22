@@ -9,7 +9,6 @@
 require_relative 'SVGObject'
 require_relative '../Mixins/TransformableMixin'
 require_relative '../Mixins/StylableMixin'
-require_relative '../Mixins/EscapingMixin'
 require_relative 'Tspan'
 require_relative 'Anchor'
 require_relative 'Tref'
@@ -24,7 +23,7 @@ class SVGTextContainer < SVGObject
 		super
 		transformable_init
 		stylable_init
-		escaping_init do_escape
+		@escape = do_escape
 		
 		@name = 'abstracttextcontainer'
 		
@@ -69,7 +68,7 @@ class SVGTextContainer < SVGObject
 		xml = "<#{@name} #{attributes_string}>"
 		xml += @text_elements.map{|t|
 			if t.is_a? String
-				escape_XML t
+				@escape ? escape_xml t : t
 			else
 				t.to_xml
 			end

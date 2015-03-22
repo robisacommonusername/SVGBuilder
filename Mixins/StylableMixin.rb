@@ -9,7 +9,7 @@ module StylableMixin
 	#attributes, as it generates a css style string, e.g
 	#style="stroke-width: 5; fill: red;"
 	def styles(style)
-		@attributes[:style] |= Style.new
+		@attributes[:style] |= StyleAttrHelper.new
 		
 		@attributes[:style].set_styles(style)
 		
