@@ -6,11 +6,13 @@ module SVG
 			super do_escape
 			
 			@name = 'text'
+			#Make the default text-anchor middle for RVG compatability
 			@attributes.merge!({
 				:x => x,
-				:y => y
+				:y => y,
+				:text_anchor => 'middle'
 			})
-			text(txt) unless txt.nil?
+			@text_elements << txt unless txt.nil?
 			
 			yield self if block_given?
 			return self

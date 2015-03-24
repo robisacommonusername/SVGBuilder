@@ -4,7 +4,7 @@ module SVG
 	class Tspan < SVGObject
 		include StylableMixin
 		
-		def initialize(contents='', x=0, y=0, do_escape=true)
+		def initialize(contents='', x=nil, y=nil, do_escape=true)
 			super()
 			stylable_init
 			

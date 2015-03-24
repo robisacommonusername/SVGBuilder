@@ -3,10 +3,13 @@ require_relative 'SVGObject'
 module SVG
 	class SVGContainer < SVGObject
 		#Import the svg elements that can be in the container
-		@@content_classes = [:rect, :line, :polyline, :polygon, :circle,
+		#We need to import them within the class to break the circular
+		#dependency, some of these classes require the class SVGContainer
+		#to be available
+		content_classes = [:rect, :line, :polyline, :polygon, :circle,
 			:path, :ellipse, :image, :text, :tspan, :tref, :textpath,
 			:anchor, :group, :style, :use]
-		@@content_classes.each do |c|
+		content_classes.each do |c|
 			require_relative c.to_s.capitalize
 		end
 		
@@ -15,30 +18,111 @@ module SVG
 			@svg_objects = []
 		end
 		
-		#A container may have shapes added to it. Metaprogram them in
-		#Don't metaprogram "use" or group, we will give them a custom implemenation
-		@@content_classes.reject{|c| c == :use || c==:group}.each do |shape_name|
-			define_method(shape_name) do |*args|
-				#determine shape class from name, and create an instance
-				shape_class_name = shape_name.to_s.capitalize
-				shape_class = SVG.const_get(shape_class_name)
-				s = shape_class.new(*args) #splat arguments
-				
-				#user can pass a block, which allows the shape to be customised,
-				#however this is not essential. Note that the shape s
-				#can be mutated inside the block
-				yield s if block_given?
-				
-				@svg_objects << s
-	
-				return s 
-			end
+		#The following methods are for adding shapes, etc. Initially I
+		#tried metaprogramming these methods, but it doesn't work well
+		#due to the difficulties of using block_given? and yield inside
+		#define_method. Thus we need to write all the methods out "long
+		# hand". At least this is better for generating documentation.
+		
+		def rect(*args)
+			s = Rect.new(*args)
+			yield s if block_given?	
+			@svg_objects << s
+			return s 
 		end
 		
+		def line(*args)
+			s = Line.new(*args)
+			yield s if block_given?	
+			@svg_objects << s
+			return s 
+		end
+		
+		def polyline(*args)
+			s = Polyline.new(*args)
+			yield s if block_given?	
+			@svg_objects << s
+			return s 
+		end
+		
+		def polygon(*args)
+			s = Polygon.new(*args)
+			yield s if block_given?	
+			@svg_objects << s
+			return s 
+		end
+		
+		def circle(*args)
+			s = Circle.new(*args)
+			yield s if block_given?	
+			@svg_objects << s
+			return s 
+		end
+		
+		def path(*args)
+			s = Path.new(*args)
+			yield s if block_given?	
+			@svg_objects << s
+			return s 
+		end
+		
+		def ellipse(*args)
+			s = Ellipse.new(*args)
+			yield s if block_given?	
+			@svg_objects << s
+			return s 
+		end
+		
+		def image(*args)
+			s = Image.new(*args)
+			yield s if block_given?	
+			@svg_objects << s
+			return s 
+		end
+		
+		def text(*args)
+			s = Text.new(*args)
+			yield s if block_given?	
+			@svg_objects << s
+			return s 
+		end
+		
+		def tspan(*args)
+			s = Tspan.new(*args)
+			yield s if block_given?	
+			@svg_objects << s
+			return s 
+		end
+		
+		def tref(*args)
+			s = Tref.new(*args)
+			yield s if block_given?	
+			@svg_objects << s
+			return s 
+		end
+		
+		def textpath(*args)
+			s = Textpath.new(*args)
+			yield s if block_given?	
+			@svg_objects << s
+			return s 
+		end
+		
+		def anchor(*args)
+			s = Anchor.new(*args)
+			yield s if block_given?	
+			@svg_objects << s
+			return s 
+		end
 		alias_method :a, :anchor
 		
-		#The group constructor takes no arguments, which is why we can't just
-		#metaprogram it in as above
+		def style(*args)
+			s = Style.new(*args)
+			yield s if block_given?	
+			@svg_objects << s
+			return s 
+		end
+		
 		def group
 			g = Group.new
 			yield g if block_given?

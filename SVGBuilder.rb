@@ -23,6 +23,11 @@ module SVG
 			@id_ctr = 1 #use for assigning unique ids
 			@defs = [] #svg objects that go in the definitions section
 			
+			#SVG standard doesn't have a way of setting the background
+			#It's possible to use the background css attribute, but support
+			#is spotty. Therefore, we'll just create a background rectangle
+			@background = nil
+			
 			yield self if block_given?
 			
 			return self
@@ -37,7 +42,9 @@ module SVG
 		def to_xml
 			xml = '<?xml version="1.0"?>'
 			xml += "\n<svg #{attributes_string} >\n"
-			xml += "<defs>#{@defs.map{|o| o.to_xml}.join("\n")}</defs>" unless @defs.empty?
+			xml += "<defs>#{@defs.map{|o| o.to_xml}.join("\n")}</defs>\n" unless @defs.empty?
+			xml += @background.to_xml unless @background.nil?
+			xml += "\n"
 			xml += @svg_objects.map{|o| o.to_xml}.join("\n")
 			xml += "\n</svg>"
 			return xml
@@ -63,6 +70,12 @@ module SVG
 			yield self if block_given?
 			
 			return self
+		end
+		
+		#RVG compatability method. This seems to work, but it's a bit of a hack
+		def background_fill=(colour)
+			@background = Rect.new('100%','100%',0,0) if @background.nil?
+			@background.styles(:fill=>colour)
 		end
 		
 		#This is a non-RVG method, provided for convenience

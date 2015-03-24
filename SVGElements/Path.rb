@@ -22,17 +22,20 @@ module SVG
 				v = [v]
 			end
 			
-			define_method k do |*args|
+			define_method(k) do |*args, &block|
 				formatted_args = v.map{|n| args.slice!(0,n).join(' ')}.join(', ')
 				@attributes[:d] += " #{k} #{formatted_args}"
-				yield self if block_given?
+				#we can't use yield/block_given? here inside define_method
+				#yield self if block_given?
+				block.call(self) if block.is_a? Proc
 				return self
 			end
 			k = k.to_s.downcase.to_sym
-			define_method k do |*args|
+			define_method(k) do |*args, &block|
 				formatted_args = v.map{|n| args.slice!(0,n).join(' ')}.join(', ')
 				@attributes[:d] += " #{k} #{formatted_args}"
-				yield self if block_given?
+				#yield self if block_given?
+				block.call(self) if block.is_a? Proc
 				return self
 			end
 		end

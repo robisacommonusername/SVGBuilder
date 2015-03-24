@@ -4,7 +4,7 @@ module SVG
 		def initialize(r, x=0, y=0)
 			super()
 			@name = 'circle'
-			@attributes.merge({
+			@attributes.merge!({
 				:r => r,
 				:cx => x,
 				:cy => y

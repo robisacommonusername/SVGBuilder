@@ -7,8 +7,8 @@ module SVG
 			@attributes.merge!({
 				:rx => rx,
 				:ry => ry,
-				:cx => x,
-				:cy => y
+				:cx => cx,
+				:cy => cy
 			})
 			
 			yield self if block_given?

@@ -12,11 +12,6 @@
 require_relative 'SVGObject'
 require_relative '../Mixins/TransformableMixin'
 require_relative '../Mixins/StylableMixin'
-module SVG; class SVGTextContainer < SVGObject; end; end
-require_relative 'Tspan'
-require_relative 'Anchor'
-require_relative 'Tref'
-require_relative 'Textpath'
 
 module SVG
 	class SVGTextContainer < SVGObject
@@ -24,8 +19,8 @@ module SVG
 		include StylableMixin
 		
 		#Import text elements
-		@@text_contents = [:tspan, :anchor, :tref, :textpath]
-		@@text_contents.each do |c|
+		content_classes = [:tspan, :anchor, :tref, :textpath]
+		content_classes.each do |c|
 			require_relative c.to_s.capitalize
 		end
 		
@@ -48,28 +43,45 @@ module SVG
 			return self
 		end
 		
-		def text(t)
-			@text_elements << t
-			
+		def <<(txt)
+			@text_elements << txt
 			yield self if block_given?
-			
 			return self
 		end
 		
-		#The following elements can be included inside a text node, and we metaprogram
-		#in their convenience methods:
-		@@text_contents.each do |m|
-			define_method(m) do |args|
-				m_class = SVG.const_get(m.to_s.capitalize)
-				
-				obj = m_class.new(*args)
-				
-				yield obj if block_given?
-				
-				@text_contents << obj
-				
-				return obj
-			end
+		def text(*args)
+			s = Text.new(*args)
+			yield s if block_given?	
+			@text_elements << s
+			return s 
+		end
+		
+		def tspan(*args)
+			s = Tspan.new(*args)
+			yield s if block_given?	
+			@text_elements << s
+			return s 
+		end
+		
+		def tref(*args)
+			s = Tref.new(*args)
+			yield s if block_given?	
+			@text_elements << s
+			return s 
+		end
+		
+		def textpath(*args)
+			s = Textpath.new(*args)
+			yield s if block_given?	
+			@text_elements << s
+			return s 
+		end
+		
+		def anchor(*args)
+			s = Anchor.new(*args)
+			yield s if block_given?	
+			@text_elements << s
+			return s 
 		end
 		alias_method :a, :anchor
 		
