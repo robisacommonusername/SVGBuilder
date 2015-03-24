@@ -7,15 +7,15 @@ module SVG
 		include TransformableMixin
 		include StylableMixin
 		
-		def initialize(url)
-			super
+		def initialize(url, width=nil, height=nil, x=0, y=0)
+			super()
 			transformable_init
 			stylable_init
 			
 			@name = 'image'
 			@attributes[:"xlink:href"] = url
 			
-			if block_given? yield self end
+			yield self if block_given?
 			return self
 		end
 	end

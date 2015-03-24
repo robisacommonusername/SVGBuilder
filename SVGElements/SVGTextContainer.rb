@@ -6,22 +6,31 @@
 #i.e. <text>An <tspan>important</tspan> message</text>. We need to be
 #able to do entity escaping on the text in case the user tries to change
 #the text content to something like "</text><scipt>alert('XSS')</script><text>"
+
+#Forward declaration to allow the text content elements, some of which 
+#inherit from text container to be imported
 require_relative 'SVGObject'
 require_relative '../Mixins/TransformableMixin'
 require_relative '../Mixins/StylableMixin'
+module SVG; class SVGTextContainer < SVGObject; end; end
 require_relative 'Tspan'
 require_relative 'Anchor'
 require_relative 'Tref'
-require_relative 'TextPath'
+require_relative 'Textpath'
 
 module SVG
 	class SVGTextContainer < SVGObject
 		include TransformableMixin
 		include StylableMixin
-		include EscapingMixin
+		
+		#Import text elements
+		@@text_contents = [:tspan, :anchor, :tref, :textpath]
+		@@text_contents.each do |c|
+			require_relative c.to_s.capitalize
+		end
 		
 		def initialize(do_escape=true)
-			super
+			super()
 			transformable_init
 			stylable_init
 			@escape = do_escape
@@ -34,7 +43,7 @@ module SVG
 			#that tspan does its own escaping
 			@text_elements = []
 			
-			if block_given? yield self end
+			yield self if block_given?
 			
 			return self
 		end
@@ -42,39 +51,38 @@ module SVG
 		def text(t)
 			@text_elements << t
 			
-			if block_given? yield self end
+			yield self if block_given?
 			
 			return self
 		end
 		
 		#The following elements can be included inside a text node, and we metaprogram
 		#in their convenience methods:
-		text_contents = [:tspan, :anchor, :tref, :textPath]
-		text_contents.each do |m|
+		@@text_contents.each do |m|
 			define_method(m) do |args|
-				m_class = Object.const_get(m.to_s.capitalize)
+				m_class = SVG.const_get(m.to_s.capitalize)
 				
 				obj = m_class.new(*args)
 				
-				if block_given? yield obj end
+				yield obj if block_given?
 				
 				@text_contents << obj
 				
 				return obj
 			end
 		end
-		alias :a, :anchor
+		alias_method :a, :anchor
 		
 		def to_xml
 			xml = "<#{@name} #{attributes_string}>"
 			xml += @text_elements.map{|t|
 				if t.is_a? String
-					@escape ? escape_xml t : t
+					@escape ? (escape_xml t) : t
 				else
 					t.to_xml
 				end
 			}.join('')
-			xml += "</#{@name}>"
+			xml += "</#{@name}>\n"
 		end
 	end
 end

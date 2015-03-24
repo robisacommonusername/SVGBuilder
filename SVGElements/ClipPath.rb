@@ -7,13 +7,13 @@ module SVG
 		include TransformableMixin
 		
 		def initialize
-			super
+			super()
 			stylable_init
 			transformable_init
 			
 			@name = "clipPath"
 			
-			if block_given? yield self end
+			yield self if block_given?
 			return self
 		end
 	end

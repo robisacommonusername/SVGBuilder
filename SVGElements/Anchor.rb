@@ -2,12 +2,13 @@ require_relative 'SVGContainer'
 
 module SVG
 	class Anchor < SVGContainer
-		def initialize
-			super
+		def initialize(href)
+			super()
 			
 			@name = 'a'
+			@attributes[:href] = href
 			
-			if block_given? yield self end
+			yield self if block_given?
 			return self
 		end
 		
@@ -26,7 +27,7 @@ module SVG
 			@attributes.delete_if{|k,v| k==:href || k==:show || k==:actuate}.merge!(fixed)
 			
 			#call SVGContainer #to_xml method
-			super
+			super()
 			
 		end
 	end

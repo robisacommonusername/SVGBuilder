@@ -3,13 +3,13 @@ module SVG
 		def initialize(class_name)
 			@class_name = class_name
 			@attributes = {}
-			if block_given? yield self end
+			yield self if block_given?
 			return self
 		end
 		
 		def attributes(attrs)
 			@attributes.merge(attrs)
-			if block_given? yield self end
+			yield self if block_given?
 			return self
 		end
 		
@@ -29,7 +29,7 @@ module SVG
 				if @attributes.has_key? attr
 					return @attributes[attr]
 				else
-					super #method missing
+					super(attr, *vals) #method missing
 				end
 				
 			when /^[a-zA-Z_]+=$/
@@ -40,7 +40,7 @@ module SVG
 				@attributes[attr_str.slice(0..-2).to_sym] = vals.first
 				
 			else
-				super #method missing
+				super(attr, *vals) #method missing
 			end
 		end
 	end

@@ -6,13 +6,13 @@ module SVG
 		include StylableMixin
 		
 		def initialize(id)
-			super
+			super()
 			stylable_init
 			
 			@name = 'tref'
 			@attributes[:"xlink:href"] = id
 			
-			if block_given? yield self end
+			yield self if block_given?
 			return self
 		end
 	end

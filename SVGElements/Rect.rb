@@ -1,8 +1,10 @@
 require_relative 'AbstractShape'
 module SVG
 	class Rect < AbstractShape
-		def initialize(x,y,width,height,rx=nil,ry=nil)
-			super
+		#Personally I'd prefer to have the constructor arguments in the
+		#order x,y,width,height, but RVG doesn't do it that way
+		def initialize(width,height,x=0,y=0,rx=nil,ry=nil)
+			super()
 			@name = 'rect'
 			@attributes.merge!({
 				:x => x,
@@ -13,7 +15,7 @@ module SVG
 				:ry => ry
 			})
 			
-			if block_given? yield self end
+			yield self if block_given?
 			return self
 		end
 		
@@ -23,7 +25,7 @@ module SVG
 		def to(right, bottom)
 			@attributes[:width] = right - @attributes[:x]
 			@attributes[:height] = bottom - @attributes[:y]
-			if block_given? yield self end
+			yield self if block_given?
 			return self
 		end
 	end

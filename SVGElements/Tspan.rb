@@ -4,20 +4,23 @@ module SVG
 	class Tspan < SVGObject
 		include StylableMixin
 		
-		def initialize(contents, do_escape=true)
-			super
+		def initialize(contents='', x=0, y=0, do_escape=true)
+			super()
 			stylable_init
 			
 			@name = 'tspan'
 			@contents = contents
 			@escape = do_escape
+			@attributes[:x] = x
+			@attributes[:y] = y
 			
-			if block_given? yield self end
+			yield self if block_given?
 			return self
 		end
+		attr_accessor :contents
 		
 		def to_xml
-			content_str = @escape ? escape_xml @contents : @content
+			content_str = @escape ? (escape_xml @contents) : @contents
 			"<tspan #{attributes_string}>#{content_str}</tspan>"
 		end
 		

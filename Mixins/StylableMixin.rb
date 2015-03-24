@@ -10,11 +10,11 @@ module SVG
 		#attributes, as it generates a css style string, e.g
 		#style="stroke-width: 5; fill: red;"
 		def styles(style)
-			@attributes[:style] |= StyleAttrHelper.new
+			@attributes[:style] = StyleAttrHelper.new() if @attributes[:style].nil?
 			
 			@attributes[:style].set_styles(style)
 			
-			if block_given? yield self end
+			yield self if block_given?
 			
 			return self
 		end

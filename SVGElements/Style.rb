@@ -1,28 +1,28 @@
 require_relative 'SVGContainer'
-require_relative 'CssStylesheet'
+require_relative 'CSS/CssStylesheet'
 
 module SVG
 	class Style < SVGContainer
 		def initialize(css)
-			super
+			super()
 			
 			@name = 'style'
 			@css = 'css'
 			@stylesheet = CssStylesheet.new
 			
-			if block_given? yield self end
+			yield self if block_given?
 			return self
 		end
 		
 		def add_class(name)
 			c = @stylesheet.add_class(name)
-			if block_given? yield c end
+			yield c if block_given?
 			return c
 		end
 		
 		def add_css(css)
 			@css += css
-			if block_given? yield self end
+			yield self if block_given?
 			return self
 		end
 		
@@ -31,7 +31,7 @@ module SVG
 			xml = "<style>\n"
 			xml += "/* <![CDATA[ */\n#{@css}\n#{@stylesheet.to_css}\n /* ]]> */"
 			xml += @svg_objects.map{|o| o.to_xml}.join("\n")
-			xml += "\n</style>
+			xml += "\n</style>"
 		end
 	end
 end

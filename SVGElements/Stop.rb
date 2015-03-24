@@ -3,7 +3,7 @@ module SVG
 	class Stop < SVGObject
 	
 		def initialize(stop_colour, offset)
-			super
+			super()
 			
 			@name = 'stop'
 			@attributes.merge!({
@@ -11,7 +11,7 @@ module SVG
 				:offset => offset
 			})
 			
-			if block_given? yield self end
+			yield self if block_given?
 			return self
 		end
 	end

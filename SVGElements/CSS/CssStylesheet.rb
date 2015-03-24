@@ -7,7 +7,7 @@ module SVG
 		
 		def add_class(name)
 			c = CssClass.new(name)
-			if block_given? yield c end
+			yield c if block_given?
 			@classes << c
 			return c
 		end

@@ -1,8 +1,8 @@
 require_relative 'AbstractShape'
 module SVG
 	class Circle < AbstractShape
-		def initialize(r, x=nil, y=nil)
-			super
+		def initialize(r, x=0, y=0)
+			super()
 			@name = 'circle'
 			@attributes.merge({
 				:r => r,
@@ -10,7 +10,7 @@ module SVG
 				:cy => y
 			})
 			
-			if block_given? yield self end
+			yield self if block_given?
 			return self
 		end
 		
@@ -25,7 +25,7 @@ module SVG
 			r = (dx**2 + dy**2)**(0.5)
 			@attributes[:r] = r
 			
-			if block_given? yield self end
+			yield self if block_given?
 			return self
 		end
 	end

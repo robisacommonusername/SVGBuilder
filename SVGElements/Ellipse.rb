@@ -1,8 +1,8 @@
 require_relative 'AbstractShape'
 module SVG
 	class Ellipse < AbstractShape
-		def initialize(rx, ry, cx=nil, cy=nil)
-			super
+		def initialize(rx, ry, cx=0, cy=0)
+			super()
 			@name = 'ellipse'
 			@attributes.merge!({
 				:rx => rx,
@@ -11,7 +11,7 @@ module SVG
 				:cy => y
 			})
 			
-			if block_given? yield self end
+			yield self if block_given?
 			return self
 		end
 	end

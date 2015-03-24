@@ -9,7 +9,7 @@ module SVG
 		include StylableMixin
 		
 		def initialize
-			super
+			super()
 			transformable_init
 			stylable_init
 			
@@ -21,9 +21,9 @@ module SVG
 		#The following attributes might be ids, which need to be wrapped as
 		#  url(#id). However, they may not be ids too. Thus we use the IdHelper
 		#object here
-		maybe_id_methods = [:clip_path, :fill, :stroke]
+		maybe_id_methods = [:"clip_path=", :"fill=", :"stroke="]
 		maybe_id_methods.each do |m|
-			define_method(m) |maybe_id|
+			define_method(m) do |maybe_id|
 				@attributes[m] = IdHelper.new(maybe_id)
 			end
 		end

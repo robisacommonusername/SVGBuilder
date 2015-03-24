@@ -5,8 +5,8 @@ module SVG
 		include TransformableMixin
 		include StylableMixin
 		
-		def initialize(width, height)
-			super
+		def initialize(width=0, height=0, x=0, y=0)
+			super()
 			transformable_init
 			stylable_init
 			
@@ -14,10 +14,12 @@ module SVG
 			
 			@attributes.merge!({
 				:width => width,
-				:height => height
+				:height => height,
+				:x => x,
+				:y => y
 			})
 			
-			if block_given? yield self end
+			yield self if block_given?
 			
 			return self
 		end

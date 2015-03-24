@@ -12,9 +12,8 @@ module SVG
 		
 		#Some methods for performing escaping of text, etc
 		attr_accessor :escape
-		alias :"escape?", :escape
+		alias_method :"escape?", :escape
 		
-		private :escape_xml
 		def escape_xml(s)
 			#Escape the basic entities < > & and "
 			#Make sure we escape ampersand first to avoid double escapes
@@ -24,8 +23,8 @@ module SVG
 				s
 			end
 		end
+		private :escape_xml
 		
-		private :escape_quote
 		def escape_quote(s)
 			if (@escape)
 				s.gsub('"','&quot;')
@@ -33,8 +32,8 @@ module SVG
 				s
 			end
 		end
+		private :escape_quote
 		
-		private :attributes_string
 		#helper methods which will be used in to_xml
 		def attributes_string
 			#note that underscores are converted to hyphens. Quotes are entity encoded
@@ -46,6 +45,7 @@ module SVG
 			
 			return attrs.join(' ')
 		end
+		private :attributes_string
 		
 		#This is not the way RVG does attribute setting, but it's nicer. Instead
 		#of using self.attr1 = value 1, self.attr2 = value2, we should be able
@@ -62,7 +62,7 @@ module SVG
 				self.send(setter, v)
 			end
 			
-			if block_given? yield self end
+			yield self if block_given?
 			
 			return self
 		end
@@ -73,7 +73,7 @@ module SVG
 		#without mucking about checking the (non-existent) docs
 		def attributes_no_helpers(attrs)
 			@attributes.merge! attrs
-			if block_given? yield self end
+			yield self if block_given?
 			return self
 		end
 		
@@ -90,7 +90,7 @@ module SVG
 				if @attributes.has_key? attr
 					return @attributes[attr]
 				else
-					super #method missing
+					super(attr, *vals) #method missing
 				end
 				
 			when /^[a-zA-Z_]+=$/
@@ -101,7 +101,7 @@ module SVG
 				@attributes[attr_str.slice(0..-2).to_sym] = vals.first
 				
 			else
-				super #method missing
+				super(attr, *vals) #method missing
 			end
 		end
 		

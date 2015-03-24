@@ -6,12 +6,12 @@ module SVG
 		include StylableMixin
 		
 		def initialize
-			super
+			super()
 			stylable_init
 			
 			@stops = []
 			@name = 'abstractGradient'
-			if block_given? yield self end
+			yield self if block_given?
 			
 			return self
 		end
