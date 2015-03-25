@@ -6,8 +6,11 @@ module SVG
 	module UnitsMixin
 		units = [:em, :em, :ex, :px, :in, :cm, :mm, :pt, :pc]
 		units.each do |u|
-			define_method(u) do
-				"#{self}#{u}"
+			#Ensure that we don't redefine any methods accidentally
+			unless self.respond_to? u
+				define_method(u) {"#{self}#{u}"}
+			else
+				warn "WARNING: method #{u} is already defined on #{self.class}.  To prevent conflict, enter dimensions into SVGBuilder as strings, e.g. '3#{u}' instead of 3.#{u}"
 			end
 		end
 	end
