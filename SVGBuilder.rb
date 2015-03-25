@@ -26,12 +26,15 @@ module SVG
 			#SVG standard doesn't have a way of setting the background
 			#It's possible to use the background css attribute, but support
 			#is spotty. Therefore, we'll just create a background rectangle
-			@background = nil
+			@background_fill = nil
 			
 			yield self if block_given?
 			
 			return self
 		end
+		
+		#Required for RVG compatability
+		attr_accessor :background_fill
 		
 		def new_id
 			id = "id_#{@id_ctr}"
@@ -43,8 +46,22 @@ module SVG
 			xml = '<?xml version="1.0"?>'
 			xml += "\n<svg #{attributes_string} >\n"
 			xml += "<defs>#{@defs.map{|o| o.to_xml}.join("\n")}</defs>\n" unless @defs.empty?
-			xml += @background.to_xml unless @background.nil?
-			xml += "\n"
+			
+			#Create background fill hack using rect
+			unless @background_fill.nil?
+				#We can't simply use width = height = '100%', because the
+				#viewbox may not completely fill the drawing (if using
+				#preserveAspectRatio, and viewbox/drawing have different
+				#aspect ratios). Therefore we need to use the actual
+				#width/height of the drawing
+				width = @attributes[:width]
+				height = @attributes[:height]
+				r = Rect.new(width, height)
+				r.fill = @background_fill
+				xml += r.to_xml
+				xml += "\n"
+			end
+			
 			xml += @svg_objects.map{|o| o.to_xml}.join("\n")
 			xml += "\n</svg>"
 			return xml
@@ -70,12 +87,6 @@ module SVG
 			yield self if block_given?
 			
 			return self
-		end
-		
-		#RVG compatability method. This seems to work, but it's a bit of a hack
-		def background_fill=(colour)
-			@background = Rect.new('100%','100%',0,0) if @background.nil?
-			@background.styles(:fill=>colour)
 		end
 		
 		#This is a non-RVG method, provided for convenience
