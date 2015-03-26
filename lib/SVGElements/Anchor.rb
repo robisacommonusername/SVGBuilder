@@ -1,6 +1,6 @@
 require_relative '../Base/SVGContainer'
 
-module SVG
+class SVG < SVGAbstract::SVGContainer
 	class Anchor < SVGAbstract::SVGContainer
 		def initialize(href)
 			super()

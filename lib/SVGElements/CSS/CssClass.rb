@@ -1,4 +1,4 @@
-module SVG
+class SVG < SVGAbstract::SVGContainer
 	class CssClass
 		def initialize(class_name)
 			@class_name = class_name

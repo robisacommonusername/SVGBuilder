@@ -1,6 +1,6 @@
-require_relative 'SVGBuilder'
+require_relative '../lib/SVG'
 
-svg = SVG::SVGBuilder.new(15.cm, 15.cm).viewbox(0,0,250,250) do |canvas|
+svg = SVG.new(15.cm, 15.cm).viewbox(0,0,250,250) do |canvas|
 	canvas.background_fill = 'white'
 
 	canvas.g.translate(100, 150).rotate(-30) do |body|

@@ -1,5 +1,5 @@
 require_relative '../Base/SVGObject'
-module SVG
+class SVG < SVGAbstract::SVGContainer
 	class Stop < SVGAbstract::SVGObject
 	
 		def initialize(stop_colour, offset)

@@ -1,5 +1,5 @@
 require_relative '../Base/AbstractShape'
-module SVG
+class SVG < SVGAbstract::SVGContainer
 	class Ellipse < SVGAbstract::AbstractShape
 		def initialize(rx, ry, cx=0, cy=0)
 			super()

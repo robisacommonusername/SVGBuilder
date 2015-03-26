@@ -1,6 +1,6 @@
 require_relative '../Base/AbstractGradient'
 
-module SVG
+class SVG < SVGAbstract::SVGContainer
 	class LinearGradient < SVGAbstract::AbstractGradient
 		def initialize
 			super()

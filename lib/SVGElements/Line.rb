@@ -1,5 +1,5 @@
 require_relative '../Base/AbstractShape'
-module SVG
+class SVG < SVGAbstract::SVGContainer
 	class Line < SVGAbstract::AbstractShape
 		def initialize(x1=0, y1=0, x2=0, y2=0)
 			super()

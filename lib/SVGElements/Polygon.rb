@@ -1,5 +1,5 @@
 require_relative '../Base/AbstractShape'
-module SVG
+class SVG < SVGAbstract::SVGContainer
 	class Polygon < SVGAbstract::AbstractShape
 		def initialize(*points)
 			super()

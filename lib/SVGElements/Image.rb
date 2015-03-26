@@ -2,7 +2,7 @@ require_relative '../Base/SVGObject'
 require_relative '../Mixins/TransformableMixin'
 require_relative '../Mixins/StylableMixin'
 
-module SVG
+class SVG < SVGAbstract::SVGContainer
 	class Image < SVGAbstract::SVGObject
 		include SVGAbstract::TransformableMixin
 		include SVGAbstract::StylableMixin

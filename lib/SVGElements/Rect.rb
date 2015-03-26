@@ -1,5 +1,5 @@
 require_relative '../Base/AbstractShape'
-module SVG
+class SVG < SVGAbstract::SVGContainer
 	class Rect < SVGAbstract::AbstractShape
 		#Personally I'd prefer to have the constructor arguments in the
 		#order x,y,width,height, but RVG doesn't do it that way

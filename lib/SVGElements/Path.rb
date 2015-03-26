@@ -1,5 +1,5 @@
 require_relative '../Base/AbstractShape'
-module SVG
+class SVG < SVGAbstract::SVGContainer
 	class Path < SVGAbstract::AbstractShape
 		def initialize(d)
 			super()

@@ -1,5 +1,5 @@
 require_relative 'CssClass'
-module SVG
+class SVG < SVGAbstract::SVGContainer
 	class CssStylesheet
 		def initialize
 			@classes = []

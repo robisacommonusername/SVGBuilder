@@ -1,6 +1,6 @@
 require_relative '../Mixins/TransformableMixin'
 require_relative '../Mixins/StylableMixin'
-module SVG
+class SVG < SVGAbstract::SVGContainer
 	class Pattern < SVGAbstract::SVGContainer
 		include SVGAbstract::TransformableMixin
 		include SVGAbstract::StylableMixin

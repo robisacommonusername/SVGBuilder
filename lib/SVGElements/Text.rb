@@ -1,6 +1,6 @@
 require_relative '../Base/SVGTextContainer'
 
-module SVG
+class SVG < SVGAbstract::SVGContainer
 	class Text < SVGAbstract::SVGTextContainer
 		def initialize(x=0,y=0,txt=nil,do_escape=true)
 			super do_escape

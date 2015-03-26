@@ -1,6 +1,6 @@
 require_relative '../Base/SVGContainer'
 
-module SVG
+class SVG < SVGAbstract::SVGContainer
 	class Group < SVGAbstract::SVGContainer
 		include SVGAbstract::StylableMixin
 		include SVGAbstract::TransformableMixin

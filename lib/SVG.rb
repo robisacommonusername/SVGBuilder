@@ -55,7 +55,7 @@ class SVG < SVGAbstract::SVGContainer
 			#width/height of the drawing
 			width = @attributes[:width]
 			height = @attributes[:height]
-			r = SVG::Rect.new(width, height)
+			r = Rect.new(width, height)
 			r.fill = @background_fill
 			xml += r.to_xml
 			xml += "\n"
