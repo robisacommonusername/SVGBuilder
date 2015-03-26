@@ -25,7 +25,7 @@ svg = SVG.new(15.cm, 15.cm).viewbox(0,0,250,250) do |canvas|
 	canvas.use(foot).translate(100, 185).rotate(-15)
 
 	canvas.text(125, 30) do |title|
-		title.tspan("duck|").styles(:text_anchor=>'end', :font_size=>20,
+		title.tspan("duck|").styles(:font_size=>20,
 					:font_family=>'helvetica', :fill=>'black')
 		title.tspan("type").styles(:font_size=>22,
 			:font_family=>'times', :font_style=>'italic', :fill=>'red')
