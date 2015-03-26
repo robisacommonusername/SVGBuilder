@@ -30,13 +30,16 @@ module SVGAbstract
 			stylable_init
 			@escape = do_escape
 			
-			@name = 'abstracttextcontainer'
-			
 			#textelements can be either strings (i.e. actual text), or SVGObjects
 			#like tspan. The strings must be entity escaped
 			#The tspan elements will not be entity escaped here, it is assumed
 			#that tspan does its own escaping
 			@svg_objects = []
+			
+			@name = 'abstracttextcontainer'
+			
+			#Set default text anchor to middle for RVG compatability
+			@attributes[:text_anchor] = 'middle'
 			
 			yield self if block_given?
 			

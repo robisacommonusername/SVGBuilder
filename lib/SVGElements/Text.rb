@@ -6,11 +6,9 @@ class SVG < SVGAbstract::SVGContainer
 			super do_escape
 			
 			@name = 'text'
-			#Make the default text-anchor middle for RVG compatability
 			@attributes.merge!({
 				:x => x,
 				:y => y,
-				:text_anchor => 'middle'
 			})
 			@text_elements << txt unless txt.nil?
 			
