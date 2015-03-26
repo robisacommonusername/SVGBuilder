@@ -24,7 +24,7 @@ module SVGAbstract
 		maybe_id_methods = [:"clip_path=", :"fill=", :"stroke="]
 		maybe_id_methods.each do |m|
 			define_method(m) do |maybe_id|
-				@attributes[m] = IdHelper.new(maybe_id)
+				@attributes[m.to_s.slice(0..-2).to_sym] = IdHelper.new(maybe_id)
 			end
 		end
 	end
