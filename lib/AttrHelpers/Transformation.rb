@@ -1,4 +1,4 @@
-module SVG
+module SVGAbstract
 	class Transformation
 		def initialize
 			@transforms = []

@@ -1,8 +1,8 @@
-require_relative 'SVGContainer'
+require_relative '../Base/SVGContainer'
 require_relative 'CSS/CssStylesheet'
 
 module SVG
-	class Style < SVGContainer
+	class Style < SVGAbstract::SVGContainer
 		def initialize(css)
 			super()
 			

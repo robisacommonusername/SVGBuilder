@@ -1,7 +1,7 @@
-require_relative 'SVGTextContainer'
+require_relative '../Base/SVGTextContainer'
 
 module SVG
-	class Textpath < SVGTextContainer
+	class Textpath < SVGAbstract::SVGTextContainer
 		def initialize(path_id, do_escape=true)
 			super do_escape
 			

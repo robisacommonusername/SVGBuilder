@@ -1,6 +1,6 @@
-require_relative 'AbstractShape'
+require_relative '../Base/AbstractShape'
 module SVG
-	class Circle < AbstractShape
+	class Circle < SVGAbstract::AbstractShape
 		def initialize(r, x=0, y=0)
 			super()
 			@name = 'circle'

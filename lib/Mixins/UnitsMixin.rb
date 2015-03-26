@@ -2,7 +2,7 @@
 #to give them methods .in, .cm, .px, etc
 #This is just for RVG compatability. It enables us to do things like
 #SVGBuilder.new(3.cm, 4.cm) to create a 4x3 centimetre image
-module SVG
+module SVGAbstract
 	module UnitsMixin
 		units = [:em, :em, :ex, :px, :in, :cm, :mm, :pt, :pc]
 		units.each do |u|
@@ -17,9 +17,9 @@ module SVG
 end
 
 class Float
-	include SVG::UnitsMixin
+	include SVGAbstract::UnitsMixin
 end
 
 class Fixnum
-	include SVG::UnitsMixin
+	include SVGAbstract::UnitsMixin
 end

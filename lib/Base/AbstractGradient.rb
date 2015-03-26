@@ -1,7 +1,7 @@
 require_relative 'SVGObject'
 require_relative '../Mixins/StylableMixin'
 
-module SVG
+module SVGAbstract
 	class AbstractGradient < SVGObject
 		include StylableMixin
 		
@@ -11,13 +11,10 @@ module SVG
 			
 			@stops = []
 			@name = 'abstractGradient'
-			yield self if block_given?
-			
-			return self
 		end
 		
 		def stop(stop_colour, offset)
-			s = Stop.new(stop_colour, offset)
+			s = SVG::Stop.new(stop_colour, offset)
 			
 			if block_given? yield s end
 			

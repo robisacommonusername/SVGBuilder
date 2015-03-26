@@ -1,8 +1,8 @@
-require_relative 'SVGObject'
+require_relative '../Base/SVGObject'
 require_relative '../Mixins/StylableMixin'
 module SVG
-	class Tspan < SVGObject
-		include StylableMixin
+	class Tspan < SVGAbstract::SVGObject
+		include SVGAbstract::StylableMixin
 		
 		def initialize(contents='', x=nil, y=nil, do_escape=true)
 			super()

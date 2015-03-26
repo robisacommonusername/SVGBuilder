@@ -2,9 +2,9 @@ require_relative '../Mixins/StylableMixin'
 require_relative '../Mixins/TransformableMixin'
 
 module SVG
-	class ClipPath < SVGContainer
-		include StylableMixin
-		include TransformableMixin
+	class ClipPath < SVGAbstract::SVGContainer
+		include SVGAbstract::StylableMixin
+		include SVGAbstract::TransformableMixin
 		
 		def initialize
 			super()

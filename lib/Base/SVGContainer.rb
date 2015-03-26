@@ -1,6 +1,6 @@
 require_relative 'SVGObject'
 
-module SVG
+module SVGAbstract
 	class SVGContainer < SVGObject
 		#Import the svg elements that can be in the container
 		#We need to import them within the class to break the circular
@@ -10,12 +10,16 @@ module SVG
 			:path, :ellipse, :image, :text, :tspan, :tref, :textpath,
 			:anchor, :group, :style, :use]
 		content_classes.each do |c|
-			require_relative c.to_s.capitalize
+			require_relative "../SVGElements/#{c.to_s.capitalize}"
 		end
 		
 		def initialize
 			super()
 			@svg_objects = []
+		end
+		
+		def <<(obj)
+			@svg_objects << obj
 		end
 		
 		#The following methods are for adding shapes, etc. Initially I
@@ -25,91 +29,91 @@ module SVG
 		# hand". At least this is better for generating documentation.
 		
 		def rect(*args)
-			s = Rect.new(*args)
+			s = SVG::Rect.new(*args)
 			yield s if block_given?	
 			@svg_objects << s
 			return s 
 		end
 		
 		def line(*args)
-			s = Line.new(*args)
+			s = SVG::Line.new(*args)
 			yield s if block_given?	
 			@svg_objects << s
 			return s 
 		end
 		
 		def polyline(*args)
-			s = Polyline.new(*args)
+			s = SVG::Polyline.new(*args)
 			yield s if block_given?	
 			@svg_objects << s
 			return s 
 		end
 		
 		def polygon(*args)
-			s = Polygon.new(*args)
+			s = SVG::Polygon.new(*args)
 			yield s if block_given?	
 			@svg_objects << s
 			return s 
 		end
 		
 		def circle(*args)
-			s = Circle.new(*args)
+			s = SVG::Circle.new(*args)
 			yield s if block_given?	
 			@svg_objects << s
 			return s 
 		end
 		
 		def path(*args)
-			s = Path.new(*args)
+			s = SVG::Path.new(*args)
 			yield s if block_given?	
 			@svg_objects << s
 			return s 
 		end
 		
 		def ellipse(*args)
-			s = Ellipse.new(*args)
+			s = SVG::Ellipse.new(*args)
 			yield s if block_given?	
 			@svg_objects << s
 			return s 
 		end
 		
 		def image(*args)
-			s = Image.new(*args)
+			s = SVG::Image.new(*args)
 			yield s if block_given?	
 			@svg_objects << s
 			return s 
 		end
 		
 		def text(*args)
-			s = Text.new(*args)
+			s = SVG::Text.new(*args)
 			yield s if block_given?	
 			@svg_objects << s
 			return s 
 		end
 		
 		def tspan(*args)
-			s = Tspan.new(*args)
+			s = SVG::Tspan.new(*args)
 			yield s if block_given?	
 			@svg_objects << s
 			return s 
 		end
 		
 		def tref(*args)
-			s = Tref.new(*args)
+			s = SVG::Tref.new(*args)
 			yield s if block_given?	
 			@svg_objects << s
 			return s 
 		end
 		
 		def textpath(*args)
-			s = Textpath.new(*args)
+			s = SVG::Textpath.new(*args)
 			yield s if block_given?	
 			@svg_objects << s
 			return s 
 		end
 		
 		def anchor(*args)
-			s = Anchor.new(*args)
+			s = SVG::Anchor.new(*args)
 			yield s if block_given?	
 			@svg_objects << s
 			return s 
@@ -117,14 +121,14 @@ module SVG
 		alias_method :a, :anchor
 		
 		def style(*args)
-			s = Style.new(*args)
+			s = SVG::Style.new(*args)
 			yield s if block_given?	
 			@svg_objects << s
 			return s 
 		end
 		
 		def group
-			g = Group.new
+			g = SVG::Group.new
 			yield g if block_given?
 			@svg_objects << g
 			return g
@@ -146,7 +150,7 @@ module SVG
 			#conflicts, the id should NOT have the form id_123
 			begin
 				id = svg_object.id #this may trigger a NoMethodError if there's no id
-				use = Use.new(svg_object,x,y)
+				use = SVG::Use.new(svg_object,x,y)
 				
 				yield use if block_given?
 				 

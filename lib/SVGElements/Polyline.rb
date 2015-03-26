@@ -1,6 +1,6 @@
-require_relative 'AbstractShape'
+require_relative '../Base/AbstractShape'
 module SVG
-	class Polyline < AbstractShape
+	class Polyline < SVGAbstract::AbstractShape
 		def initialize(*points)
 			super()
 			@name = 'polyline'

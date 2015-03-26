@@ -1,5 +1,5 @@
 require_relative '../AttrHelpers/Transformation'
-module SVG
+module SVGAbstract
 	module TransformableMixin
 		def transformable_init
 			@attributes[:transform] = nil

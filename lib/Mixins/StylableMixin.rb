@@ -1,5 +1,5 @@
 require_relative '../AttrHelpers/StyleAttrHelper'
-module SVG
+module SVGAbstract
 	module StylableMixin
 		def stylable_init
 			@attributes[:style] = nil

@@ -1,11 +1,11 @@
-require_relative 'SVGObject'
+require_relative '../Base/SVGObject'
 require_relative '../Mixins/TransformableMixin'
 require_relative '../Mixins/StylableMixin'
 
 module SVG
-	class Image < SVGObject
-		include TransformableMixin
-		include StylableMixin
+	class Image < SVGAbstract::SVGObject
+		include SVGAbstract::TransformableMixin
+		include SVGAbstract::StylableMixin
 		
 		def initialize(url, width=nil, height=nil, x=0, y=0)
 			super()

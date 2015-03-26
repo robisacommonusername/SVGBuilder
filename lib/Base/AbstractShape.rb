@@ -3,7 +3,7 @@ require_relative '../Mixins/TransformableMixin'
 require_relative '../Mixins/StylableMixin'
 require_relative '../AttrHelpers/IdHelper'
 
-module SVG
+module SVGAbstract
 	class AbstractShape < SVGObject
 		include TransformableMixin
 		include StylableMixin

@@ -1,4 +1,4 @@
-module SVG
+module SVGAbstract
 	#Base SVG object, all others inherit from this
 	class SVGObject
 		def initialize

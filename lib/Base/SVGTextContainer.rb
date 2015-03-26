@@ -13,7 +13,7 @@ require_relative 'SVGObject'
 require_relative '../Mixins/TransformableMixin'
 require_relative '../Mixins/StylableMixin'
 
-module SVG
+module SVGAbstract
 	class SVGTextContainer < SVGObject
 		include TransformableMixin
 		include StylableMixin
@@ -21,7 +21,7 @@ module SVG
 		#Import text elements
 		content_classes = [:tspan, :anchor, :tref, :textpath]
 		content_classes.each do |c|
-			require_relative c.to_s.capitalize
+			require_relative "../SVGElements/#{c.to_s.capitalize}"
 		end
 		
 		def initialize(do_escape=true)
@@ -36,7 +36,7 @@ module SVG
 			#like tspan. The strings must be entity escaped
 			#The tspan elements will not be entity escaped here, it is assumed
 			#that tspan does its own escaping
-			@text_elements = []
+			@svg_objects = []
 			
 			yield self if block_given?
 			
@@ -44,50 +44,48 @@ module SVG
 		end
 		
 		def <<(txt)
-			@text_elements << txt
-			yield self if block_given?
-			return self
+			@svg_objects << txt
 		end
 		
 		def text(*args)
-			s = Text.new(*args)
+			s = SVG::Text.new(*args)
 			yield s if block_given?	
-			@text_elements << s
+			@svg_objects << s
 			return s 
 		end
 		
 		def tspan(*args)
-			s = Tspan.new(*args)
+			s = SVG::Tspan.new(*args)
 			yield s if block_given?	
-			@text_elements << s
+			@svg_objects << s
 			return s 
 		end
 		
 		def tref(*args)
-			s = Tref.new(*args)
+			s = SVG::Tref.new(*args)
 			yield s if block_given?	
-			@text_elements << s
+			@svg_objects << s
 			return s 
 		end
 		
 		def textpath(*args)
-			s = Textpath.new(*args)
+			s = SVG::Textpath.new(*args)
 			yield s if block_given?	
-			@text_elements << s
+			@svg_objects << s
 			return s 
 		end
 		
 		def anchor(*args)
-			s = Anchor.new(*args)
+			s = SVG::Anchor.new(*args)
 			yield s if block_given?	
-			@text_elements << s
+			@svg_objects << s
 			return s 
 		end
 		alias_method :a, :anchor
 		
 		def to_xml
 			xml = "<#{@name} #{attributes_string}>"
-			xml += @text_elements.map{|t|
+			xml += @svg_objects.map{|t|
 				if t.is_a? String
 					@escape ? (escape_xml t) : t
 				else

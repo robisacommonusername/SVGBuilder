@@ -1,6 +1,6 @@
-require_relative 'AbstractShape'
+require_relative '../Base/AbstractShape'
 module SVG
-	class Ellipse < AbstractShape
+	class Ellipse < SVGAbstract::AbstractShape
 		def initialize(rx, ry, cx=0, cy=0)
 			super()
 			@name = 'ellipse'

@@ -1,6 +1,6 @@
-require_relative 'AbstractShape'
+require_relative '../Base/AbstractShape'
 module SVG
-	class Use < AbstractShape
+	class Use < SVGAbstract::AbstractShape
 		def initialize(svg_object, x=nil, y=nil)
 			super()
 			@name = 'use'

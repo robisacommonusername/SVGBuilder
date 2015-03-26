@@ -1,9 +1,9 @@
-require_relative 'SVGContainer'
+require_relative '../Base/SVGContainer'
 
 module SVG
-	class Group < SVGContainer
-		include StylableMixin
-		include TransformableMixin
+	class Group < SVGAbstract::SVGContainer
+		include SVGAbstract::StylableMixin
+		include SVGAbstract::TransformableMixin
 		
 		def initialize
 			super()

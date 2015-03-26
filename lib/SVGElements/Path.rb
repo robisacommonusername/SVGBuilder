@@ -1,6 +1,6 @@
-require_relative 'AbstractShape'
+require_relative '../Base/AbstractShape'
 module SVG
-	class Path < AbstractShape
+	class Path < SVGAbstract::AbstractShape
 		def initialize(d)
 			super()
 			@name = 'path'

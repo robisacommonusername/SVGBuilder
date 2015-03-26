@@ -1,10 +1,13 @@
-require_relative 'AbstractGradient'
+require_relative '../Base/AbstractGradient'
 
 module SVG
-	class LinearGradient < AbstractGradient
+	class LinearGradient < SVGAbstract::AbstractGradient
 		def initialize
 			super()
 			@name = 'linearGradient'
+			
+			yield self if block_given?
+			return self
 		end
 	end
 end

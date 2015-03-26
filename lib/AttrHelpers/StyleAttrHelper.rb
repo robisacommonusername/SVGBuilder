@@ -1,4 +1,4 @@
-module SVG
+module SVGAbstract
 	#Inline css style
 	class StyleAttrHelper
 		def initialize

@@ -1,9 +1,9 @@
 require_relative '../Mixins/TransformableMixin'
 require_relative '../Mixins/StylableMixin'
 module SVG
-	class Pattern < SVGContainer
-		include TransformableMixin
-		include StylableMixin
+	class Pattern < SVGAbstract::SVGContainer
+		include SVGAbstract::TransformableMixin
+		include SVGAbstract::StylableMixin
 		
 		def initialize(width=0, height=0, x=0, y=0)
 			super()

@@ -1,6 +1,6 @@
-require_relative 'AbstractShape'
+require_relative '../Base/AbstractShape'
 module SVG
-	class Polygon < AbstractShape
+	class Polygon < SVGAbstract::AbstractShape
 		def initialize(*points)
 			super()
 			@name = 'polygon'
